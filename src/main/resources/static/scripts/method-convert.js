@@ -5,7 +5,7 @@ function convertMethod(selector) {
 		var cmsg = '';
 		var $form = $('<form/>');
 		$form.attr('action', action);
-		for (var name in parms) {
+		for (var name in params) {
 			var attrName = name;
 			if ("confirm_message" == name) {
 				cmsg = params[name];
