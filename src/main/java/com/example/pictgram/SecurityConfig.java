@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private FormAuthenticationProvider authenticationProvider;
 	
 	@Autowired
-	private static final String[] URLS = { "/css/**", "/images/**", "/scripts/**", "/h2-console/**" };
+	private static final String[] URLS = { "/css/**", "/images/**", "/scripts/**", "/h2-console/**", "/favicon.ico" };
 	
 	/**
 	 * 認証から除外する
