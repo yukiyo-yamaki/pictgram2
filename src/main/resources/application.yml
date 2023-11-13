@@ -31,3 +31,5 @@ onesignal:
             enable: true
     thymeleaf:
       check-template-location: false
+googlemap:
+  key: ${googlemap.key}
