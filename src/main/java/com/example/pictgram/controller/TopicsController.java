@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.context.Context;
 
 import com.example.pictgram.entity.Comment;
 import com.example.pictgram.entity.Favorite;
@@ -43,6 +44,7 @@ import com.example.pictgram.form.FavoriteForm;
 import com.example.pictgram.form.TopicForm;
 import com.example.pictgram.form.UserForm;
 import com.example.pictgram.repository.TopicRepository;
+import com.example.pictgram.service.SendMailService;
 
 @Controller
 public class TopicsController {
@@ -63,6 +65,9 @@ public class TopicsController {
 
 	@Value("${image.local:false}")
 	private String imageLocal;
+	
+	@Autowired
+	private SendMailService sendMailService;
 
 	@GetMapping(path = "/topics")
 	public String index(Principal principal, Model model) throws IOException {
@@ -196,7 +201,13 @@ public class TopicsController {
 		redirAttrs.addFlashAttribute("class", "alert-info");
 		redirAttrs.addFlashAttribute("message",
 				messageSource.getMessage("topics.create.flash.2", new String[] {}, locale));
-
+		
+		Context context = new Context();
+		context.setVariable("title", "【Pctgram】新規投稿");
+		context.setVariable("name", user.getUsername());
+		context.setVariable("description", entity.getDescription());
+		sendMailService.sendMail(context);
+		
 		return "redirect:/topics";
 	}
 
